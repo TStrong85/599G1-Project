@@ -58,7 +58,7 @@ Could be adjusted to additionally add a penalty for moving backwards away from a
 
 I expected that adding this reward to existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
 
-IMAGE
+![graphs relating to the partial reward experiment](Partialreward_figs.PNG)
 
 #### Tileset Subsets
 For this test, I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
@@ -74,21 +74,28 @@ For this test I wanted to compare how the training process would differ if the t
 Note that although both had a small penalty per frame, the fixed time limit made it so that the total penalty from this was constant regardless of progress.
 
 I wasn’t sure which would lead to better results so I wanted to do a direct comparison with and without the time limit bonus. For this test, I used only the small turn tiles as a compromise between the simplicity of only straight tiles and the complexity of using all the tiles.
-
-IMAGE
+- *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
+- *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
+[graphs relating to time bonus experiment](Timing_figs.PNG)
 
 #### Track Length
 For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process
 Wall Penalty
 For this test, I wanted to compare how having a penalty for hitting a wall would affect how the model trained and how the corresponding agent would drive. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot. I tested having no penalty against having a penalty of -0.1 per second of contact.
 
-IMAGE
+[graphs relating to track length experiment](Tracklength_figs.PNG)
+
+#### Wall Penalty
+
+[graphs relating to wall penalty experiment](Wallpenalty_figs.PNG)
 
 
 #### Network Hidden Layers
 After training a lot of models, I was interested in observing changes in the number and size of hidden layers. The other models were trained with 2 layers with 256 units, so I tried varying the number of layers to be 1, 2, and 4 in one test, and the number of units to be 256, 32, and 4
 
 Notably, the time to train the models didn’t seem to change significantly given the change in network structure despite the number of parameters changing. I think this is because the time used for the physics timesteps bottlenecked the training speed, so I’d be interested in formally investigating whether increasing the time scale or adding more training environments to the training scene would change the training speed or other observable features in the training process.
+[graphs relating to network layers experiment](Networklayers_figs.PNG)
+[graphs relating to network hidden units experiment](Networkunits_figs.PNG)
 
 
 
