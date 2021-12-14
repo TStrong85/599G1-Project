@@ -50,6 +50,7 @@ Additionally, I varied aspects of the reward functions
 
 Notably, I trained most of my models for about 2,000,000 steps (~30 minutes each).
 
+
 ### Specific Tests
 #### Partial Reward between checkpoints (with fixed time)
 Although the original code included a reward for reaching each checkpoint, I wanted to add a fraction of the checkpoint reward for moving towards it without reaching it completely
@@ -58,16 +59,19 @@ Could be adjusted to additionally add a penalty for moving backwards away from a
 
 I expected that adding this reward to existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
 
-![graphs relating to the partial reward experiment](Partialreward_figs.PNG)
+![graphs relating to the partial reward experiment](Partialreward_figs.png)
+
 
 #### Tileset Subsets
 For this test, I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
 - *my_karts_straight_3* trained with only straight tiles (4 total)
 - *my_karts_random_5* trained with all 8 tiles
 - *my_karts_random_7* trained with only the small turn tiles (2 total)
+
 ![graphs relating to the tile subset experiment](Tilesubset_figs.PNG)
 
 On a similar note, if more tiles were to be added it would also be interesting to see how the size/length of a tile influenced training since that affects how far apart checkpoints are placed.
+
 
 #### Time Bonus for checkpoints 
 For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being constant.
@@ -76,25 +80,30 @@ Note that although both had a small penalty per frame, the fixed time limit made
 I wasn’t sure which would lead to better results so I wanted to do a direct comparison with and without the time limit bonus. For this test, I used only the small turn tiles as a compromise between the simplicity of only straight tiles and the complexity of using all the tiles.
 - *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
 - *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
+- 
 [graphs relating to time bonus experiment](Timing_figs.PNG)
+
 
 #### Track Length
 For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process
 Wall Penalty
 For this test, I wanted to compare how having a penalty for hitting a wall would affect how the model trained and how the corresponding agent would drive. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot. I tested having no penalty against having a penalty of -0.1 per second of contact.
 
-[graphs relating to track length experiment](Tracklength_figs.PNG)
+[graphs relating to track length experiment](Tracklength_figs.png)
+
 
 #### Wall Penalty
 
-[graphs relating to wall penalty experiment](Wallpenalty_figs.PNG)
+[graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
 
 #### Network Hidden Layers
 After training a lot of models, I was interested in observing changes in the number and size of hidden layers. The other models were trained with 2 layers with 256 units, so I tried varying the number of layers to be 1, 2, and 4 in one test, and the number of units to be 256, 32, and 4
 
 Notably, the time to train the models didn’t seem to change significantly given the change in network structure despite the number of parameters changing. I think this is because the time used for the physics timesteps bottlenecked the training speed, so I’d be interested in formally investigating whether increasing the time scale or adding more training environments to the training scene would change the training speed or other observable features in the training process.
+
 [graphs relating to network layers experiment](Networklayers_figs.PNG)
+
 [graphs relating to network hidden units experiment](Networkunits_figs.PNG)
 
 
