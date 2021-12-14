@@ -62,8 +62,10 @@ IMAGE
 
 #### Tileset Subsets
 For this test, I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
-
-IMAGE
+- *my_karts_straight_3* trained with only straight tiles (4 total)
+- *my_karts_random_5* trained with all 8 tiles
+- *my_karts_random_7* trained with only the small turn tiles (2 total)
+![graphs relating to the tile subset experiment](Tilesubset_figs.PNG)
 
 On a similar note, if more tiles were to be added it would also be interesting to see how the size/length of a tile influenced training since that affects how far apart checkpoints are placed.
 
