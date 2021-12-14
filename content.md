@@ -51,7 +51,7 @@ Additionally, I varied aspects of the reward functions
 Notably, I trained most of my models for about 2,000,000 steps (~30 minutes each).
 
 ### Specific Tests
-Partial Reward between checkpoints (with fixed time)
+#### Partial Reward between checkpoints (with fixed time)
 Although the original code included a reward for reaching each checkpoint, I wanted to add a fraction of the checkpoint reward for moving towards it without reaching it completely
 This was implemented by calculating the percentage of the euclidean distance away from the next checkpoint and mapping that value to between the max reward and zero.
 Could be adjusted to additionally add a penalty for moving backwards away from a checkpoint that has been reached
@@ -60,14 +60,14 @@ I expected that adding this reward to existing rewards would improve performance
 
 IMAGE
 
-Tileset Subsets
+#### Tileset Subsets
 For this test, I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
 
 IMAGE
 
 On a similar note, if more tiles were to be added it would also be interesting to see how the size/length of a tile influenced training since that affects how far apart checkpoints are placed.
 
-Time Bonus for checkpoints 
+#### Time Bonus for checkpoints 
 For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being constant.
 Note that although both had a small penalty per frame, the fixed time limit made it so that the total penalty from this was constant regardless of progress.
 
@@ -75,7 +75,7 @@ I wasn’t sure which would lead to better results so I wanted to do a direct co
 
 IMAGE
 
-Track Length
+#### Track Length
 For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process
 Wall Penalty
 For this test, I wanted to compare how having a penalty for hitting a wall would affect how the model trained and how the corresponding agent would drive. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot. I tested having no penalty against having a penalty of -0.1 per second of contact.
@@ -83,7 +83,7 @@ For this test, I wanted to compare how having a penalty for hitting a wall would
 IMAGE
 
 
-Network Hidden Layers
+#### Network Hidden Layers
 After training a lot of models, I was interested in observing changes in the number and size of hidden layers. The other models were trained with 2 layers with 256 units, so I tried varying the number of layers to be 1, 2, and 4 in one test, and the number of units to be 256, 32, and 4
 
 Notably, the time to train the models didn’t seem to change significantly given the change in network structure despite the number of parameters changing. I think this is because the time used for the physics timesteps bottlenecked the training speed, so I’d be interested in formally investigating whether increasing the time scale or adding more training environments to the training scene would change the training speed or other observable features in the training process.
