@@ -81,7 +81,7 @@ I wasn’t sure which would lead to better results so I wanted to do a direct co
 - *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
 - *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
 - 
-[graphs relating to time bonus experiment](Timing_figs.PNG)
+![graphs relating to time bonus experiment](Timing_figs.PNG)
 
 
 #### Track Length
@@ -89,12 +89,12 @@ For this test, I varied the length of the track in order to investigate whether 
 Wall Penalty
 For this test, I wanted to compare how having a penalty for hitting a wall would affect how the model trained and how the corresponding agent would drive. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot. I tested having no penalty against having a penalty of -0.1 per second of contact.
 
-[graphs relating to track length experiment](Tracklength_figs.png)
+![graphs relating to track length experiment](Tracklength_figs.png)
 
 
 #### Wall Penalty
 
-[graphs relating to wall penalty experiment](Wallpenalty_figs.png)
+![graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
 
 #### Network Hidden Layers
@@ -102,9 +102,9 @@ After training a lot of models, I was interested in observing changes in the num
 
 Notably, the time to train the models didn’t seem to change significantly given the change in network structure despite the number of parameters changing. I think this is because the time used for the physics timesteps bottlenecked the training speed, so I’d be interested in formally investigating whether increasing the time scale or adding more training environments to the training scene would change the training speed or other observable features in the training process.
 
-[graphs relating to network layers experiment](Networklayers_figs.PNG)
+![graphs relating to network layers experiment](Networklayers_figs.PNG)
 
-[graphs relating to network hidden units experiment](Networkunits_figs.PNG)
+![graphs relating to network hidden units experiment](Networkunits_figs.PNG)
 
 
 
