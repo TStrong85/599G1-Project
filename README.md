@@ -1,8 +1,9 @@
 # 599G1-Project
-Deep reinforcement learning using Unity ML agents
+Deep reinforcement learning using Unity ML agents to drive on randomly generated roads
 
-Here's a link to a webpage with more info:
-- https://tstrong85.github.io/599G1-Project/
+Heres a link to the presentation video: https://youtu.be/IEEw3OSF4iA
+
+Here's a link to a webpage with more info: https://tstrong85.github.io/599G1-Project/
 
 # Credits and References 
 
