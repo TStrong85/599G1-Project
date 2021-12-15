@@ -35,7 +35,7 @@ And lastly the ML Agents Github Repository had lots of helpful resources and doc
 
 ## Methodology
 ### Part 1: Learning to use the framework
-The first part of this project involved getting familiar with the ML Agents framework since I had never used it before. To do this, I went through various tutorials and followed along with one. Afterwards, I used the ending point of that tutorial as a starting point for this project. [Here is the particular tutorial that I followed at this stage](https://youtu.be/n5rY9ffqryU) amd [the associated repo](https://github.com/Sebastian-Schuchmann/AI-Racing-Karts).
+The first part of this project involved getting familiar with the ML Agents framework since I had never used it before. To do this, I went through various tutorials and followed along with one. Afterwards, I used the ending point of that tutorial as a starting point for this project. [Here is the particular tutorial that I followed at this stage](https://youtu.be/n5rY9ffqryU) and [the associated repo](https://github.com/Sebastian-Schuchmann/AI-Racing-Karts).
 
 In addition to this, the [ML Agents Github repo](https://github.com/Unity-Technologies/ml-agents) had a number of example scenes and training environments available to download and use.
 
