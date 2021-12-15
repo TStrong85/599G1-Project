@@ -2,9 +2,9 @@ In this project, I went through the process of learning and applying Unity's ML 
 
 
 ## Problem Statement
-I wanted to like to use Unity's ML Agents package in order to train a model that was capable of navigating a randomly generated road effectively. In the process of training this agent, I wanted to experiement with how various changes to the training environement and rewards/penalties affect the trained model. Particularly, I had two main goals:
+I wanted to like to use Unity's ML Agents package in order to train a model that was capable of navigating a randomly generated road effectively. In the process of training this agent, I wanted to experiment with how various changes to the training environment and rewards/penalties affect the trained model. Particularly, I had two main goals:
 - Try varying the tracks the agent trained on in order to compare how it affected train time and agent behaviors
-- Try varying hyperparameters and other aspects of how the agent’s model learned in order to draw comparisons. This could incude changes to the structure as well as changes  rewards and penalties.
+- Try varying hyperparameters and other aspects of how the agent’s model learned in order to draw comparisons. This could include changes to the structure as well as changes  rewards and penalties.
 
 
 ## Related work
