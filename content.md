@@ -6,29 +6,23 @@ For my project I wanted Unity's ML Agents package in order to train models to dr
 ## Problem Statement
 I'd like to use Unity's ML Agents package in order to train a model that is capable of navigating a randomly generated road effectively. In the process of training this agent, I intend to experiement with how various changes to the training environement and rewards/penalties affect the trained model.
 
+I had two main goals:
+-I wanted to be able to vary the track during training in order to compare how it affected train time and agent behaviors
+-I wanted to be vary hyperparameters and aspects of the agent’s model structure and rewards to draw comparisons
+
 
 
 ## Related work
 Since I was unfamiliar with the ML Agents framework, I ended up going over lots of different walkthough tutorials showing how to use it. Links to videos and articles that I referenced are in README.md
 
 ## Methodology
-### Part 1: Learning to train models
-The first part of this project involved getting familiar with the ML Agents framework. To do this, I went through various tutorials
-
-I followed one in particular. Afterwards, I used many of it's project files as a starting point.
-- This tutorial included multiple familiar assets, both the car controller and road tiles
+### Part 1: Learning to use the framework
+The first part of this project involved getting familiar with the ML Agents framework since I had never used it before. To do this, I went through various tutorials and followed along with one. Afterwards, I the ending point of that tutorial as a starting point for this project.
 
 ### Part 2: Generating random roads for training
-The second part of this project was to experiment with agent and environment settings. I had two main goals:
--I wanted to be able to vary the track during training in order to compare how it affected train time and agent behaviors
--I wanted to be vary hyperparameters and aspects of the agent’s model structure and rewards to draw comparisons
-
-I created a track generator in order to introduce randomness into the training environment
-Although there isn’t a dataset in a traditional sense, the track tiles sampled during generation can be changed to produce distinct differences in the environment
-To train multiple agents in parallel, the environments are stacked on top of each other
-
-
-
+One of the aspects that I wanted to experiment with was how the training environment influenced the training process of a model.
+To do this, I created a track generator in order to introduce randomness into the training environment with several parameters that I could control. 
+Although there isn’t a dataset in the same sense as supervised learning, the generated tracks serve a similar purpose in the sense that the features of the track infuences how the track learns.
 
 For each of the tiles that I used with the track generator, I had to add nodes to identify the entry and exit points of each tile (shown with green and red dots). Additionally, in order to validate the placement of each track piece I used additional points in the middle of the road surface in to raycast through (shown with blue dots). If a validation raycast of one tile hits the geometry of another, the raycasting tile cannot be placed without overlappling the roadsurface of the other.
 
@@ -37,7 +31,14 @@ For each of the tiles that I used with the track generator, I had to add nodes t
 Full tileset without nodes visible | Full tileset with nodes visible
 
 
-The total number of tiles in a generated track can be varied in order to make the course longer or shorter. The tiles that the generated track samples from can also be changed in order to alter the types of features that can be generated. Notably, checkpoints for the agent are placed at the borders between tiles and the end of the course in order to track progress through it and trigger additional actions in response to reaching a checkpoint, such as adding a reward or extending the agent's time limit.
+After annotating tiles and creating prefabs from them, I was able to instantiate them into the scene the track generator. The generation method is fairly straight forward:
+1. Sample a new track piece to extend the current road
+2. Validate that placing this piece won't block an existing road
+3. Commit to placement and extend the road if valid, otherwise don't place the piece and try again
+4. Repeat 1-3 until the road has reached the desired length or the track generated has reached the max number of placement iterations for the current road
+5. Place checkpoints along the track and a decorative finish line at the end of the road
+
+This generation works fairly well and allows for some flexibility. The total number of tiles in a generated track can be varied in order to make the course longer or shorter. The tiles that the generated track samples from can also be changed in order to alter the types of features that can be generated. Checkpoints for the agent are placed at the borders between tiles and the end of the course in order to track progress through it and trigger additional actions in response to reaching a checkpoint, such as adding a reward or extending the agent's time limit. Additionally, particularly large pieces can be counted as multiple tiles when placed in order to make the length of the navigatable road surface from varying as much.
 
 ![TrackLengthDemo.gif](TrackLengthDemo.gif) | ![TrackTilesetDemo.gif](TrackTilesetDemo.gif)
 :---:|:---:
@@ -53,7 +54,7 @@ This shows 20 environments running in parallel. The agents on each are all evalu
 
 
 
-## Experiments
+### Part 3: Experimenting with traning models
 After creating a generator, I varied aspects of the generation to observe how agents trained:
 - Tilesets (What track pieces are sampled to randomize the tracks)
   - only straight pieces
@@ -73,7 +74,7 @@ Additionally, I varied aspects of the reward functions
 Notably, I trained most of my models for about 2,000,000 steps (~30 minutes each).
 
 
-### Specific Tests
+## Experimenting
 #### Partial Reward between checkpoints (with fixed time)
 Although the original code included a reward for reaching each checkpoint, I wanted to add a fraction of the checkpoint reward for moving towards it without reaching it completely
 This was implemented by calculating the percentage of the euclidean distance away from the next checkpoint and mapping that value to between the max reward and zero.
@@ -115,6 +116,9 @@ For this test, I wanted to compare how having a penalty for hitting a wall would
 
 
 #### Wall Penalty
+For this test, I wanted to compare how having a penalty for hitting wall would affect models during training. 
+- *my_karts_smallturns_3* was trained without a wall penalty
+- *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
 
 ![graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
