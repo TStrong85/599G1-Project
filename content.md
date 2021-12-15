@@ -25,7 +25,10 @@ links to some of the articles that I referenced while working on the project:
 
 ## Methodology
 ### Part 1: Learning to use the framework
-The first part of this project involved getting familiar with the ML Agents framework since I had never used it before. To do this, I went through various tutorials and followed along with one. Afterwards, I the ending point of that tutorial as a starting point for this project.
+The first part of this project involved getting familiar with the ML Agents framework since I had never used it before. To do this, I went through various tutorials and followed along with one. Afterwards, I used the ending point of that tutorial as a starting point for this project. Here is the particular tutorial that I used at this stage.
+- [ML-Agents 1.0+ Creating a Mario Kart like AI](https://youtu.be/n5rY9ffqryU)
+
+In addition to this, the ML Agents Github repo had a number of example scenes and training environments available to download and use.
 
 ### Part 2: Generating random roads for training
 One of the aspects that I wanted to experiment with was how the training environment influenced the training process of a model.
@@ -94,39 +97,34 @@ The kart also has parameters that control it's speed and handling, but I don't v
 
 ## Experiments
 #### Partial Reward between checkpoints (with fixed time)
-Although the original code included a reward for reaching each checkpoint, I wanted to add a fraction of the checkpoint reward for moving towards it without reaching it completely
-This was implemented by calculating the percentage of the euclidean distance away from the next checkpoint and mapping that value to between the max reward and zero.
-Could be adjusted to additionally add a penalty for moving backwards away from a checkpoint that has been reached
-
-I expected that adding this reward to existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
+For this test I wanted to see if adding the partial checkpoint reward to the model would help it train better, particularly when the timelimit was fixed and reaching checkpoints only added a reward without increasing the time limit. I expected that adding this reward along side existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
+- *my_karts_straight_3* had partial checkpoint rewards disabled
+- *my_karts_straight_4* had partial checkpoint rewards enabled
+Looking at the episode length graph, it seems that the partial checkpoint reward did allow the model to train a bit faster, although the benefit was fairly small. This test occured with straight track pieces, so maybe adding complexity to the tileset would make the benefit more significant.
 
 ![graphs relating to the partial reward experiment](Partialreward_figs.png)
 
 
 #### Tileset Subsets
-For this test, I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
+For this test I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
 - *my_karts_straight_3* trained with only straight tiles (4 total)
 - *my_karts_random_5* trained with all 8 tiles
-- *my_karts_random_7* trained with only the small turn tiles (2 total)
+- *my_karts_random_7* trained with only the small turn tiles (2 total)\
+Notably these comparisons were made with a fixed time limit. Comparing the graphs, it seems that my expectations were met. The straight tileset optimizes episode length very quickly, the small curves reduces episode length much more steadily, and the full tileset never reaches the point where it is consistently finishing runs and optimizing speed. I think the length of the larger curves may have affected this a bit since both the time limit was fixed, although I tried to reduce the affect of this by counting larger curves as multiple tiles during generation. 
 
 ![graphs relating to the tile subset experiment](Tilesubset_figs.PNG)
 
-On a similar note, if more tiles were to be added it would also be interesting to see how the size/length of a tile influenced training since that affects how far apart checkpoints are placed.
-
 
 #### Time Bonus for checkpoints 
-For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being constant.
-Note that although both had a small penalty per frame, the fixed time limit made it so that the total penalty from this was constant regardless of progress.
-
-I wasn’t sure which would lead to better results so I wanted to do a direct comparison with and without the time limit bonus. For this test, I used only the small turn tiles as a compromise between the simplicity of only straight tiles and the complexity of using all the tiles.
+For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being fixed.
 - *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
 - *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
-- 
+Note that I used only the small turn tiles as a compromise between the simplicity of only straight tiles and the complexity of using all the tiles that was revealed in the previous experiment. Looking at the graphs, using the checkpoint time bonus with a higher penalty per frame had a significant beneficial affect on how fast the model trained. Based this, it would be interesting to see how using a longer fixed timer or using a shorter refreshing timer would affect training.
 ![graphs relating to time bonus experiment](Timing_figs.PNG)
 
 
 #### Track Length
-For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process.
+For this test I varied the length of the track in order to investigate whether there is a significant difference in the training process.
 - *my_karts_smallturns_2* was trained with 5 tile long tracks
 - *my_karts_smallturns_3* was trained with 40 tile long tracks
 I expected that the episode length would be longer since the tracks would be different physical lengths, but wanted to observe other features. One observation is that the episode length of the shorter tracks converge faster and are not subjets to as much noise. I'd guess that this is because it took longer for the agent on the long track to be able to consistently reach the end of the course.
@@ -135,7 +133,7 @@ I expected that the episode length would be longer since the tracks would be dif
 
 
 #### Wall Penalty
-For this test, I wanted to compare how having a penalty for hitting wall would affect models during training. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot.
+For this test I wanted to compare how having a penalty for hitting wall would affect models during training. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot.
 - *my_karts_smallturns_3* was trained without a wall penalty
 - *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
 Based on the graphs, the wall penalty caused the model to go slower since the episode length is consistently higher. I'd guess that this is because the penalty discouraged the agent from cutting corners in sharp turns. In addition to the usual plots, I added a graph of the total penalty applied at each section of the training. The magnitude of the units on the vertical axis are large because the values were summed and recorded every ~50k steps, but the shape shows that the wall penalty started high and was reduced to near zero towards the end of the training.
@@ -144,9 +142,7 @@ Based on the graphs, the wall penalty caused the model to go slower since the ep
 
 
 ## Conclusion
-Here are some of my broader observations:
-- Training with all of the pieces and/or with longer tracks slowed down the training when there was a fixed time. Having time be granted after each successive checkpoint significanly improved this though.
-- Policy loss graphs for most of my sessions look very noisy, but the magnitude and range of the values were very low and the agent still performed well. I'd guess that this is because the observations and controls were simple enough to learn fairly quickly.
+The various experiments that I performed allowed for some interesting comparisons. The timer method had a significant impact on how quickly the models trained, so it would be interesting to investigate this parameter more. Adding the wall penalty made the model finish the track slower. This shows that there is a trade off between driving clean an driving fast, so it would be interesting to adjust the rewards and penalties to change how this trade off works. Changes to parameters in the track generation also had a significant affect on the models. An interesting genreal observation was that the policy loss graphs for most of my sessions look very noisy, but the magnitude and range of the values were very low and the agent still performed well. I'd guess that this is because the observations and controls were simple enough to learn fairly quickly.
 
 Overall, I'm happy with the outcome of the project. I was able to alter the reward functions of the agent and observe how these changes altered training and performance, and I was able to vary the training environments of the agents in order to observe different behaviors in different track configurations.
 
