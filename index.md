@@ -99,6 +99,7 @@ The agent has parameters to determine how rewards are valued
 - Penalty given each frame
 - Wall penalty (measured as value added per second)
 - Partial checkpoint reward (a boolean determining whether rewards are given for progress towards a checkpoint)
+
 The agent also has a lot of hyperparameters within `my_training_config.yaml` that control the structure of the model and details like learning rate, gamma, and more. I kept these parameters constant through my experiments for the most part since the tutorial's training config already had decent values, although I did increase the learning rate since the learning rate is configured to anneal over the course of training.
 
 The kart also has parameters that control its speed and handling, but I don't vary them throughout the experiment performed below. For my comparisons, I trained most of my models for about 2,000,000 steps (~30 minutes each) with a few exceptions where the model seemed to converge too early.
@@ -109,6 +110,7 @@ The kart also has parameters that control its speed and handling, but I don't va
 For this test I wanted to see if adding the partial checkpoint reward to the model would help it train better, particularly when the time limit was fixed and reaching checkpoints only added a reward without increasing the time limit. I expected that adding this reward alongside existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
 - *my_karts_straight_3* had partial checkpoint rewards disabled
 - *my_karts_straight_4* had partial checkpoint rewards enabled
+
 Looking at the episode length graph, it seems that the partial checkpoint reward did allow the model to train a bit faster, although the benefit was fairly small. This test occurred with straight track pieces, so maybe adding complexity to the tileset would make the benefit more significant.
 
 ![graphs relating to the partial reward experiment](Partialreward_figs.png)
@@ -118,7 +120,8 @@ Looking at the episode length graph, it seems that the partial checkpoint reward
 For this test I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
 - *my_karts_straight_3* trained with only straight tiles (4 total)
 - *my_karts_random_5* trained with all 8 tiles
-- *my_karts_random_7* trained with only the small turn tiles (2 total)\
+- *my_karts_random_7* trained with only the small turn tiles (2 total)
+
 Notably these comparisons were made with a fixed time limit. Comparing the graphs, it seems that my expectations were met. The straight tileset optimizes episode length very quickly, the small curves reduce episode length much more steadily, and the full tileset never reaches the point where it is consistently finishing runs and optimizing speed. I think the length of the larger curves may have affected this a bit since both the time limit was fixed, although I tried to reduce the effect of this by counting larger curves as multiple tiles during generation. 
 
 ![graphs relating to the tile subset experiment](Tilesubset_figs.PNG)
@@ -128,6 +131,7 @@ Notably these comparisons were made with a fixed time limit. Comparing the graph
 For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being fixed.
 - *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
 - *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
+
 Note that I used only the small turn tiles as a compromise between the simplicity of only straight tiles and the complexity of using all the tiles that was revealed in the previous experiment. Looking at the graphs, using the checkpoint time bonus with a higher penalty per frame had a significant beneficial effect on how fast the model trained. Based on this, it would be interesting to see how using a longer fixed timer or using a shorter refreshing timer would affect training.
 ![graphs relating to time bonus experiment](Timing_figs.PNG)
 
@@ -136,6 +140,7 @@ Note that I used only the small turn tiles as a compromise between the simplicit
 For this test I varied the length of the track in order to investigate whether there is a significant difference in the training process.
 - *my_karts_smallturns_2* was trained with 5 tile long tracks
 - *my_karts_smallturns_3* was trained with 40 tile long tracks
+
 I expected that the episode length would be longer since the tracks would be different physical lengths, but wanted to observe other features. One observation is that the episode length of the shorter tracks converge faster and are not subject to as much noise. I'd guess that this is because it took longer for the agent on the long track to be able to consistently reach the end of the course.
 
 ![graphs relating to track length experiment](Tracklength_figs.png)
@@ -145,6 +150,7 @@ I expected that the episode length would be longer since the tracks would be dif
 For this test I wanted to compare how having a penalty for hitting a wall would affect models during training. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot.
 - *my_karts_smallturns_3* was trained without a wall penalty
 - *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
+
 Based on the graphs, the wall penalty caused the model to go slower since the episode length is consistently higher. I'd guess that this is because the penalty discouraged the agent from cutting corners in sharp turns. In addition to the usual plots, I added a graph of the total penalty applied at each section of the training. The magnitude of the units on the vertical axis are large because the values were summed and recorded every ~50k steps, but the shape shows that the wall penalty started high and was reduced to near zero towards the end of the training.
 ![graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
