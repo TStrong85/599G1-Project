@@ -27,7 +27,7 @@ Links to some of the articles that I referenced while working on the project:
 - [An Introduction to Unity ML-Agents](https://towardsdatascience.com/an-introduction-to-unity-ml-agents-6238452fcf4c)
 - [Diving deeper into Unity-ML Agents](https://towardsdatascience.com/diving-deeper-into-unity-ml-agents-e1667f869dc3)
 
-And lastly the ML Agents Github Repository had lots of helpful resources and documentation
+And lastly the ML Agents Github Repository had lots of helpful resources and documentation:
 - [Link to ML Agents repo](https://github.com/Unity-Technologies/ml-agents)
 - [Reference paper about ML Agents](https://arxiv.org/abs/1809.02627)
 
