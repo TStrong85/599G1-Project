@@ -3,6 +3,7 @@ In this project, I went through the process of learning and applying Unity's ML 
 #### Video Presentation Link: [https://youtu.be/IEEw3OSF4iA](https://youtu.be/IEEw3OSF4iA)
 #### Repo Link: [https://github.com/TStrong85/599G1-Project](https://github.com/TStrong85/599G1-Project)
 
+![gif showing trained agents navigating a track](Demo2_2.gif)
 
 
 ## Problem Statement
