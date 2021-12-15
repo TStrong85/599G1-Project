@@ -69,7 +69,7 @@ After getting the track generator working reliably, the next step was to incorpo
 
 
 |![ParallelTrackGenDemo.gif](ParallelTrackGenDemo.gif)|
-:---:
+|:---:|
 |This shows 20 environments running in parallel. The agents on each are all evaluating using the same model|
 
 
@@ -82,7 +82,7 @@ For partial checkpoint reward, I used euclidean distance as a heuristic for how 
 For the wall penalty, I added a trigger collider to the agent in order to detect collisions with the wall and add a small penalty each frame. To do this detection, the road is marked with a "Wall" tag and the trigger follows the car's collider in such a way so that it does not collide with the drivable road surface.
 
 |![KartCollisionGeo.PNG](KartCollisionGeo.PNG)|
-:---:
+|:---:|
 |This shows the collision geometry of the kart (the red sphere) and the associated trigger to detect wall collisions (the yellow box)|
 
 
