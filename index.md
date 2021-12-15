@@ -106,7 +106,7 @@ The kart also has parameters that control its speed and handling, but I don't va
 
 
 ## Experiments
-#### Partial Reward between checkpoints (with fixed time)
+### Partial Reward between checkpoints (with fixed time)
 For this test I wanted to see if adding the partial checkpoint reward to the model would help it train better, particularly when the time limit was fixed and reaching checkpoints only added a reward without increasing the time limit. I expected that adding this reward alongside existing rewards would improve performance since the euclidean distance heuristic is consistent given that checkpoints are placed at the border of each tile. To verify this, I trained two models with the same hyperparameters other than the partial reward for checkpoints:
 - *my_karts_straight_3* had partial checkpoint rewards disabled
 - *my_karts_straight_4* had partial checkpoint rewards enabled
@@ -116,7 +116,7 @@ Looking at the episode length graph, it seems that the partial checkpoint reward
 ![graphs relating to the partial reward experiment](Partialreward_figs.png)
 
 
-#### Tileset Subsets
+### Tileset Subsets
 For this test I wanted to compare how the features of tiles in the tileset could influence how the model trained. I expected that straight tiles would be the easiest to navigate than turns, and that subsets of the full tileset would be easier to learn on.
 - *my_karts_straight_3* trained with only straight tiles (4 total)
 - *my_karts_random_5* trained with all 8 tiles
@@ -127,7 +127,7 @@ Notably these comparisons were made with a fixed time limit. Comparing the graph
 ![graphs relating to the tile subset experiment](Tilesubset_figs.PNG)
 
 
-#### Time Bonus for checkpoints 
+### Time Bonus for checkpoints 
 For this test I wanted to compare how the training process would differ if the time limit was reset on reaching a checkpoint against the time limit being fixed.
 - *my_karts_random_7* used a penalty of -0.0001 per frame and 30 second fixed time limit
 - *my_karts_smallturns_2* used a penalty of -0.001 per frame and 20 second time limit that was refreshed upon hitting a checkpoint
@@ -136,7 +136,7 @@ Note that I used only the small turn tiles as a compromise between the simplicit
 ![graphs relating to time bonus experiment](Timing_figs.PNG)
 
 
-#### Track Length
+### Track Length
 For this test I varied the length of the track in order to investigate whether there is a significant difference in the training process.
 - *my_karts_smallturns_2* was trained with 5 tile long tracks
 - *my_karts_smallturns_3* was trained with 40 tile long tracks
@@ -146,7 +146,7 @@ I expected that the episode length would be longer since the tracks would be dif
 ![graphs relating to track length experiment](Tracklength_figs.png)
 
 
-#### Wall Penalty
+### Wall Penalty
 For this test I wanted to compare how having a penalty for hitting a wall would affect models during training. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot.
 - *my_karts_smallturns_3* was trained without a wall penalty
 - *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
