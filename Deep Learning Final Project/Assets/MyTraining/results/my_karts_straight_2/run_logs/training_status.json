@@ -1,0 +1,83 @@
+{
+    "KartAgent": {
+        "checkpoints": [
+            {
+                "steps": 499779,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-499779.onnx",
+                "reward": 0.7201298804118715,
+                "creation_time": 1639354862.660256,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-499779.pt"
+                ]
+            },
+            {
+                "steps": 678178,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-678178.onnx",
+                "reward": 0.7266666364410649,
+                "creation_time": 1639355138.7244644,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-678178.pt"
+                ]
+            },
+            {
+                "steps": 678178,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-678178.onnx",
+                "reward": null,
+                "creation_time": 1639355269.5527449,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-678178.pt"
+                ]
+            },
+            {
+                "steps": 689311,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-689311.onnx",
+                "reward": null,
+                "creation_time": 1639355965.9325173,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-689311.pt"
+                ]
+            },
+            {
+                "steps": 695521,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-695521.onnx",
+                "reward": 2.4016221364339194,
+                "creation_time": 1639356059.6863656,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-695521.pt"
+                ]
+            },
+            {
+                "steps": 696952,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-696952.onnx",
+                "reward": 4.319122934341431,
+                "creation_time": 1639356178.9134324,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-696952.pt"
+                ]
+            },
+            {
+                "steps": 714317,
+                "file_path": "results\\my_karts_straight_2\\KartAgent\\KartAgent-714317.onnx",
+                "reward": 2.7869416944524077,
+                "creation_time": 1639356292.5744433,
+                "auxillary_file_paths": [
+                    "results\\my_karts_straight_2\\KartAgent\\KartAgent-714317.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 714317,
+            "file_path": "results\\my_karts_straight_2\\KartAgent.onnx",
+            "reward": 2.7869416944524077,
+            "creation_time": 1639356292.5744433,
+            "auxillary_file_paths": [
+                "results\\my_karts_straight_2\\KartAgent\\KartAgent-714317.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

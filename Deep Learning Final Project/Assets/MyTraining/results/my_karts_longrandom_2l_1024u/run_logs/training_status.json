@@ -1,0 +1,65 @@
+{
+    "KartAgent": {
+        "checkpoints": [
+            {
+                "steps": 499676,
+                "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-499676.onnx",
+                "reward": -1.6238000648362296,
+                "creation_time": 1639466839.0221162,
+                "auxillary_file_paths": [
+                    "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-499676.pt"
+                ]
+            },
+            {
+                "steps": 999275,
+                "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-999275.onnx",
+                "reward": -0.5272667159636816,
+                "creation_time": 1639467565.48592,
+                "auxillary_file_paths": [
+                    "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-999275.pt"
+                ]
+            },
+            {
+                "steps": 1499450,
+                "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-1499450.onnx",
+                "reward": 0.2587599873542786,
+                "creation_time": 1639468304.2136192,
+                "auxillary_file_paths": [
+                    "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-1499450.pt"
+                ]
+            },
+            {
+                "steps": 1999581,
+                "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-1999581.onnx",
+                "reward": 0.3287454003637487,
+                "creation_time": 1639469038.4402723,
+                "auxillary_file_paths": [
+                    "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-1999581.pt"
+                ]
+            },
+            {
+                "steps": 2004906,
+                "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-2004906.onnx",
+                "reward": 0.32420995384454726,
+                "creation_time": 1639469039.1191485,
+                "auxillary_file_paths": [
+                    "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-2004906.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2004906,
+            "file_path": "results\\my_karts_longrandom_2l_1024u\\KartAgent.onnx",
+            "reward": 0.32420995384454726,
+            "creation_time": 1639469039.1191485,
+            "auxillary_file_paths": [
+                "results\\my_karts_longrandom_2l_1024u\\KartAgent\\KartAgent-2004906.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.27.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}
