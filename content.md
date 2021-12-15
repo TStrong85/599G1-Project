@@ -1,19 +1,27 @@
-## Abstract
-For my project I wanted Unity's ML Agents package in order to train models to drive a simple car through a race course using deep reinforcement learning
-
+In this project, I went through the process of learning and applying Unity's ML Agents package in order to train a model capable of driving a car on tracks that it has not seen before. After completing a tutorial to get started, I expanded on it by implementing a reward for failing close to the next checkpoint along the track, a penalty for touching the wall of the track, and a track generator in order to procduce a variety of track configurations by sampling from a tileset randomly. After this, I trained lots of models in order to experiment with various parameters relating to rewards and environment so that I could observe changes in the training process and draw comparisons.
 
 
 ## Problem Statement
-I'd like to use Unity's ML Agents package in order to train a model that is capable of navigating a randomly generated road effectively. In the process of training this agent, I intend to experiement with how various changes to the training environement and rewards/penalties affect the trained model.
-
-I had two main goals:
--I wanted to be able to vary the track during training in order to compare how it affected train time and agent behaviors
--I wanted to be vary hyperparameters and aspects of the agent’s model structure and rewards to draw comparisons
-
+I wanted to like to use Unity's ML Agents package in order to train a model that was capable of navigating a randomly generated road effectively. In the process of training this agent, I wanted to experiement with how various changes to the training environement and rewards/penalties affect the trained model. Particularly, I had two main goals:
+- Try varying the tracks the agent trained on in order to compare how it affected train time and agent behaviors
+- Try varying hyperparameters and other aspects of how the agent’s model learned in order to draw comparisons. This could incude changes to the structure as well as changes  rewards and penalties.
 
 
 ## Related work
-Since I was unfamiliar with the ML Agents framework, I ended up going over lots of different walkthough tutorials showing how to use it. Links to videos and articles that I referenced are in README.md
+Since I was unfamiliar with the ML Agents framework, I ended up going over lots of different walkthough tutorials showing how to use it.
+
+links to some of the videos that I referenced while working on the project:
+- [ML-Agents 1.0+ Creating a Mario Kart like AI](https://youtu.be/n5rY9ffqryU)
+- [ML-Agents 1.0+ | Create your own A.I. | Full Walkthrough | Unity3D](https://youtu.be/2Js4KiDwiyU)
+- [How to use Machine Learning AI in Unity! (ML-Agents)](https://youtu.be/zPFU30tbyKs)
+- [AI Learns to Drive a Car! (ML-Agents in Unity)](https://youtu.be/2X5m_nDBvS4)
+- [Creating a Game with Learning AI in Unity! (Tutorial / Machine Learning)](https://youtu.be/gYwWolRFt98)
+- [Mario Kart's Drifting | Mix and Jam](https://youtu.be/Ki-tWT50cEQ)
+
+links to some of the articles that I referenced while working on the project:
+- [An Introduction to Unity ML-Agents](https://towardsdatascience.com/an-introduction-to-unity-ml-agents-6238452fcf4c)
+- [Diving deeper into Unity-ML Agents](https://towardsdatascience.com/diving-deeper-into-unity-ml-agents-e1667f869dc3)
+
 
 ## Methodology
 ### Part 1: Learning to use the framework
@@ -84,7 +92,7 @@ The agent also has a lot of hyperparamters within `my_training_config.yaml` that
 The kart also has parameters that control it's speed and handling, but I don't vary them throughout the experiement performed below. For my comparisons, I trained most of my models for about 2,000,000 steps (~30 minutes each) with a few exceptions where the model seemed to converge to early.
 
 
-## Experimenting
+## Experiments
 #### Partial Reward between checkpoints (with fixed time)
 Although the original code included a reward for reaching each checkpoint, I wanted to add a fraction of the checkpoint reward for moving towards it without reaching it completely
 This was implemented by calculating the percentage of the euclidean distance away from the next checkpoint and mapping that value to between the max reward and zero.
@@ -118,46 +126,32 @@ I wasn’t sure which would lead to better results so I wanted to do a direct co
 
 
 #### Track Length
-For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process
-Wall Penalty
-For this test, I wanted to compare how having a penalty for hitting a wall would affect how the model trained and how the corresponding agent would drive. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot. I tested having no penalty against having a penalty of -0.1 per second of contact.
+For this test, I varied the length of the track in order to investigate whether there is a significant difference in the training process.
+- *my_karts_smallturns_2* was trained with 5 tile long tracks
+- *my_karts_smallturns_3* was trained with 40 tile long tracks
+I expected that the episode length would be longer since the tracks would be different physical lengths, but wanted to observe other features. One observation is that the episode length of the shorter tracks converge faster and are not subjets to as much noise. I'd guess that this is because it took longer for the agent on the long track to be able to consistently reach the end of the course.
 
 ![graphs relating to track length experiment](Tracklength_figs.png)
 
 
 #### Wall Penalty
-For this test, I wanted to compare how having a penalty for hitting wall would affect models during training. 
+For this test, I wanted to compare how having a penalty for hitting wall would affect models during training. This was motivated by the observation that before making the car’s steering more responsive, agents trained to control seemed to hit and drive along the wall a lot.
 - *my_karts_smallturns_3* was trained without a wall penalty
 - *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
-Based on the graphs, the wall penalty caused the model to go sslo
+Based on the graphs, the wall penalty caused the model to go slower since the episode length is consistently higher. I'd guess that this is because the penalty discouraged the agent from cutting corners in sharp turns. In addition to the usual plots, I added a graph of the total penalty applied at each section of the training. The magnitude of the units on the vertical axis are large because the values were summed and recorded every ~50k steps, but the shape shows that the wall penalty started high and was reduced to near zero towards the end of the training.
 ![graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
 
-#### Network Hidden Layers
-After training a lot of models, I was interested in observing changes in the number and size of hidden layers. The other models were trained with 2 layers with 256 units, so I tried varying the number of layers to be 1, 2, and 4 in one test, and the number of units to be 256, 32, and 4
 
-Notably, the time to train the models didn’t seem to change significantly given the change in network structure despite the number of parameters changing. I think this is because the time used for the physics timesteps bottlenecked the training speed, so I’d be interested in formally investigating whether increasing the time scale or adding more training environments to the training scene would change the training speed or other observable features in the training process.
-
-![graphs relating to network layers experiment](Networklayers_figs.PNG)
-
-![graphs relating to network hidden units experiment](Networkunits_figs.PNG)
-
-
-
-## Observations
-Here are some of my observations:
+## Conclusion
+Here are some of my broader observations:
 - Training with all of the pieces and/or with longer tracks slowed down the training when there was a fixed time. Having time be granted after each successive checkpoint significanly improved this though.
-- Policy loss graphs for most of my sessions were very noisy, but the agent was still performing well. I'd guess that this is because the value was fairly small from the start, and that the control space was simple enough to learn fairly quickly.\
-- Although most of my models were 2 layers with size 256, it seemed that reducing layers to 1 actually increased performance. i'd figure this is becasuse input and output sizes are small in comparison.
+- Policy loss graphs for most of my sessions look very noisy, but the magnitude and range of the values were very low and the agent still performed well. I'd guess that this is because the observations and controls were simple enough to learn fairly quickly.
 
+Overall, I'm happy with the outcome of the project. I was able to alter the reward functions of the agent and observe how these changes altered training and performance, and I was able to vary the training environments of the agents in order to observe different behaviors in different track configurations.
 
-
-## Demo *(maybe)*
-
-
-
-## Extensions
-If I were to continue this project, I’d be interested in a few areas:
+#### Extensions
+Although I was able to do several different things in this project, there are still a lot more ideas that I could explore relevant to what I've done. If I were to continue this project, I’d be interested in a few areas:
 - Experiment more with types of observations passed to the model
   - Change the number and position of raycasts
   - Give more pose data about checkpoints and physics data about self
