@@ -27,7 +27,29 @@ I created a track generator in order to introduce randomness into the training e
 Although there isn’t a dataset in a traditional sense, the track tiles sampled during generation can be changed to produce distinct differences in the environment
 To train multiple agents in parallel, the environments are stacked on top of each other
 
-In order to train multiple agents in parallel, I stacked the starting positions of each track on top of each other so that they would not interfere with each other.
+
+
+
+For each of the tiles that I used with the track generator, I had to add nodes to identify the entry and exit points of each tile (shown with green and red dots). Additionally, in order to validate the placement of each track piece I used additional points in the middle of the road surface in to raycast through (shown with blue dots). If a validation raycast of one tile hits the geometry of another, the raycasting tile cannot be placed without overlappling the roadsurface of the other.
+
+![FullTileset.PNG](FullTileset.PNG) | ![TileAnnotations.PNG](TileAnnotations.PNG)
+:---:|:---:
+Full tileset without nodes visible | Full tileset with nodes visible
+
+
+The total number of tiles in a generated track can be varied in order to make the course longer or shorter. The tiles that the generated track samples from can also be changed in order to alter the types of features that can be generated. Notably, checkpoints for the agent are placed at the borders between tiles and the end of the course in order to track progress through it and trigger additional actions in response to reaching a checkpoint, such as adding a reward or extending the agent's time limit.
+
+![TrackLengthDemo.gif](TrackLengthDemo.gif) | ![TrackTilesetDemo.gif](TrackTilesetDemo.gif)
+:---:|:---:
+These generators create tracks with 5 tiles, 10 tiles, and 40 tiles | These generators use 5 tiles in their track, but each sample from a different pool of tiles
+
+
+After getting the track generator working reliably, the next step was to incorporate it into the training process of the model. Adding an agent from the tutorial that I followed was enough to begin training, but in order to train multiple agents in parallel I had to make a prefab of this trainable environment and duplicate it multiple times. In order to avoid one track generator interfering with or otherwise influencing the generation of another (ie. blocking the path and forcing it to turn), I stack the duplicates vertically on top of one another.
+
+
+![ParallelTrackGenDemo.gif](ParallelTrackGenDemo.gif)
+:---:
+This shows 20 environments running in parallel. The agents on each are all evaluating using the same model
 
 
 
