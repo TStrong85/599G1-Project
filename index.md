@@ -1,5 +1,7 @@
 In this project, I went through the process of learning and applying Unity's ML Agents package in order to train a model capable of driving a car on tracks that it has not seen before. After completing a tutorial to get started, I expanded on it by implementing a reward for failing close to the next checkpoint along the track, a penalty for touching the wall of the track, and a track generator in order to procduce a variety of track configurations by sampling from a tileset randomly. After this, I trained lots of models in order to experiment with various parameters relating to rewards and environment so that I could observe changes in the training process and draw comparisons.
 
+#### Video Presentation Link: https://youtu.be/IEEw3OSF4iA
+
 
 ## Problem Statement
 I wanted to like to use Unity's ML Agents package in order to train a model that was capable of navigating a randomly generated road effectively. In the process of training this agent, I wanted to experiment with how various changes to the training environment and rewards/penalties affect the trained model. Particularly, I had two main goals:
