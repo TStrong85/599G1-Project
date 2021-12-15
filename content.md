@@ -146,7 +146,7 @@ The various experiments that I performed allowed for some interesting comparison
 
 Overall, I'm happy with the outcome of the project. I was able to alter the reward functions of the agent and observe how these changes altered training and performance, and I was able to vary the training environments of the agents in order to observe different behaviors in different track configurations.
 
-#### Extensions
+### Extensions
 Although I was able to do several different things in this project, there are still a lot more ideas that I could explore relevant to what I've done. If I were to continue this project, I’d be interested in a few areas:
 - Experiment more with types of observations passed to the model
   - Change the number and position of raycasts
