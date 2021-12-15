@@ -68,9 +68,9 @@ These generators create tracks with 5 tiles, 10 tiles, and 40 tiles | These gene
 After getting the track generator working reliably, the next step was to incorporate it into the training process of the model. Adding an agent from the tutorial that I followed was enough to begin training, but in order to train multiple agents in parallel I had to make a prefab of this trainable environment and duplicate it multiple times. In order to avoid one track generator interfering with or otherwise influencing the generation of another (ie. blocking the path and forcing it to turn), I stack the duplicates vertically on top of one another.
 
 
-![ParallelTrackGenDemo.gif](ParallelTrackGenDemo.gif)
+|![ParallelTrackGenDemo.gif](ParallelTrackGenDemo.gif)|
 :---:
-This shows 20 environments running in parallel. The agents on each are all evaluating using the same model
+|This shows 20 environments running in parallel. The agents on each are all evaluating using the same model|
 
 
 ### Part 3: Adding additional rewards and penalties
@@ -81,9 +81,9 @@ For partial checkpoint reward, I used euclidean distance as a heuristic for how 
 
 For the wall penalty, I added a trigger collider to the agent in order to detect collisions with the wall and add a small penalty each frame. To do this detection, the road is marked with a "Wall" tag and the trigger follows the car's collider in such a way so that it does not collide with the drivable road surface.
 
-![KartCollisionGeo.PNG](KartCollisionGeo.PNG)
+|![KartCollisionGeo.PNG](KartCollisionGeo.PNG)|
 :---:
-This shows the collision geometry of the kart (the red sphere) and the associated trigger to detect wall collisions (the yellow box)
+|This shows the collision geometry of the kart (the red sphere) and the associated trigger to detect wall collisions (the yellow box)|
 
 
 ### Part 4: Experimenting with parameters
