@@ -38,7 +38,7 @@ After annotating tiles and creating prefabs from them, I was able to instantiate
 4. Repeat 1-3 until the road has reached the desired length or the track generated has reached the max number of placement iterations for the current road
 5. Place checkpoints along the track and a decorative finish line at the end of the road
 
-This generation works fairly well and allows for some flexibility. The total number of tiles in a generated track can be varied in order to make the course longer or shorter. The tiles that the generated track samples from can also be changed in order to alter the types of features that can be generated. Checkpoints for the agent are placed at the borders between tiles and the end of the course in order to track progress through it and trigger additional actions in response to reaching a checkpoint, such as adding a reward or extending the agent's time limit. Additionally, particularly large pieces can be counted as multiple tiles when placed in order to make the length of the navigatable road surface from varying as much.
+This generation works fairly well and allows for some flexibility. The total number of tiles in a generated track can be varied in order to make the course longer or shorter. The tiles that the generated track samples from can also be changed in order to alter the types of features that can be generated. Checkpoints for the agent are placed at the borders between tiles and the end of the course in order to track progress through it and trigger additional actions in response to reaching a checkpoint, such as adding a reward or extending the agent's time limit. Additionally, particularly large pieces can be counted as multiple tiles when placed in order to make the length of the navigatable road surface vary less.
 
 ![TrackLengthDemo.gif](TrackLengthDemo.gif) | ![TrackTilesetDemo.gif](TrackTilesetDemo.gif)
 :---:|:---:
@@ -53,25 +53,35 @@ After getting the track generator working reliably, the next step was to incorpo
 This shows 20 environments running in parallel. The agents on each are all evaluating using the same model
 
 
+### Part 3: Adding additional rewards and penalties
+One of the aspect that I wanted to experiment with was how the rewards and penalties used would influence the training process of a model.
+Two things that Implemented was a reward for ending an episode closer to the next checkpoint even if the next checkpoint wasn't actually reached, and a penalty for coming into contact with the walls.
 
-### Part 3: Experimenting with traning models
-After creating a generator, I varied aspects of the generation to observe how agents trained:
-- Tilesets (What track pieces are sampled to randomize the tracks)
-  - only straight pieces
-  - only small curved pieces
-  - only curved pieces
-  - all tiles
-- Track Length (How many tiles are in the track)
-- Timer + bonus time for reaching a checkpoint (How much time does the agent have to complete the track)
+For partial checkpoint reward, I used euclidean distance as a heuristic for how much of a reward to give by comparing the distance of the agent from the next checkpoint to the distance from the previous checkpoint to the next checkpoint. The ratio of these distances is used to linearly interpolate between no reward if at the previous checkpoint to the full checkpoint reward if at the next checkpoint. Notably there is no penalty for going backwards along the track, although switching the `Mathf.Lerp()` call to be `Mathf.LerpUnclamped()` would calculate a penalty in this case.
+
+For the wall penalty, I added a trigger collider to the agent in order to detect collisions with the wall and add a small penalty each frame. To do this detection, the road are marked with a "Wall" tag and the trigger follows the car's collider in such a way so that it does not collide with the drivable road surface.
+
+![KartCollisionGeo.PNG](KartCollisionGeo.PNG)
+:---:
+This shows the collision geometry of the kart (the red sphere) and the associated trigger to detect wall collisions (the yellow box)
+
+
+### Part 4: Experimenting with hyperameters
+At this point everything that I need is implemented and I can begin experimenting with hyperparameters in order to observe differences in training.
+
+The track generator has two main parameter to mess with:
+- Tileset to sample from (stored as a list of tile prefabs)
+- Desired length of the generated track (measured as the number of tiles)
 - How often the track is regenerated (measured in number of episodes completed using it)
 
-Additionally, I varied aspects of the reward functions
-- Penalty each step (to encourage higher speed)
-- Penalty when hitting a wall (to encourage obstacle avoidance)
-- Reward for reaching checkpoints
-- Reward for completing the track
+The agent has parameters to determine how rewards are valued
+- Initial time limt to reach the next checkpoint & bonus time for reaching a checkpoint (How much time does the agent have to complete the track, and what value the timer set to upon reaching a checkpoint)
+- Penalty given each frame
+- Wall penalty (measured as value added per second)
+- Partial checkpoint reward (a boolean determining whether rewards are given for progress towards a checkpoint)
+The agent also has a lot of hyperparamters within `my_training_config.yaml` that control the structure of the model and details like learning rate, gamma, and more. I kept these parameters constant through my experiments for the most part since the tutorial's training config already had decent values, although I did increase the learning rate since the learning rate is configured to anneal over the course of training.
 
-Notably, I trained most of my models for about 2,000,000 steps (~30 minutes each).
+The kart also has parameters that control it's speed and handling, but I don't vary them throughout the experiement performed below. For my comparisons, I trained most of my models for about 2,000,000 steps (~30 minutes each) with a few exceptions where the model seemed to converge to early.
 
 
 ## Experimenting
@@ -119,7 +129,7 @@ For this test, I wanted to compare how having a penalty for hitting a wall would
 For this test, I wanted to compare how having a penalty for hitting wall would affect models during training. 
 - *my_karts_smallturns_3* was trained without a wall penalty
 - *my_karts_smallturns_4* was trained with a wall penalty of -0.1 per second of contact
-
+Based on the graphs, the wall penalty caused the model to go sslo
 ![graphs relating to wall penalty experiment](Wallpenalty_figs.png)
 
 
