@@ -1,0 +1,2 @@
+example command to start training (from terminal in "Assets/MyTraining" directory)
+mlagents-learn my_training_config.yaml --run-id="csnext_example"

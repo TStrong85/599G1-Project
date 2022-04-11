@@ -1182,7 +1182,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 49f1c8cd349cc5e41a5e81936db3b39c, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: da41b49ffafb24747a0b8de5dbc9d293, type: 3}
   m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: KartAgent

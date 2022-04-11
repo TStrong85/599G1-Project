@@ -175,7 +175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7641025647456585004, guid: 2d57f14ed0024df41b0b079552330def, type: 3}
       propertyPath: targetTrackLength
-      value: 40
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d57f14ed0024df41b0b079552330def, type: 3}
@@ -406,6 +406,10 @@ PrefabInstance:
       propertyPath: _trackGenerator
       value: 
       objectReference: {fileID: 7550451208997511040}
+    - target: {fileID: 3137537921882263140, guid: 6ee47c49c80105744a68e93ce6972bd4, type: 3}
+      propertyPath: numberOfIterationsPerTrack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3137537921882263165, guid: 6ee47c49c80105744a68e93ce6972bd4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3999939

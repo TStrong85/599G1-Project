@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useSeed: 0
   seed: 1
+  usePlacementDelay: 0
+  placementDelay: 0.2
   targetTrackLength: 15
   maxIterations: 30
   startSegment: {fileID: 6617392872399994231}
